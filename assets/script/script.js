@@ -8,6 +8,20 @@ $(document).ready(function(){
         buildBlock(time);
     })
 
+    //Bind eventlistener to each save button
+    $(".btn").click(function(){
+        entry = $(this).siblings("textarea").val();
+        hour = $(this).siblings("div").text();
+
+        //Save the hour and corresponding entry to local storage
+        savePlan(hour, entry);
+    });
+
+    function savePlan(hour, entry)
+    {
+        localStorage.setItem(hour, entry);
+    }
+
     //Build a time block
     function buildBlock(time){
         //build the outer block
