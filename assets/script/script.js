@@ -3,6 +3,11 @@ $(document).ready(function(){
     var Times = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
     var container = $("#planner");
     
+    //Build the planner by iteraing through the array
+    Times.forEach(function(time){
+        buildBlock(time);
+    })
+
     //Build a time block
     function buildBlock(time){
         //build the outer block
@@ -13,6 +18,7 @@ $(document).ready(function(){
         //Col for displaying time
         var timeCol = $("<div>");
         timeCol.addClass("col-md-1");
+        timeCol.text(time + "h00");
         
         //Entry box
         var textEntry = $("<textarea>");
@@ -20,7 +26,7 @@ $(document).ready(function(){
         
         //save buton
         var saveBtn = $("<button>");
-        saveBtn.addClass("col-md-1");
+        saveBtn.addClass("col-md-1 btn btn-info");
         var saveIcon = $("<i>");
         saveIcon.addClass("far fa-save");
         saveBtn.append(saveIcon);
