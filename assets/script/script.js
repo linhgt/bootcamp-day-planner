@@ -2,6 +2,10 @@ $(document).ready(function(){
     //array of times for reference
     var Times = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
     var container = $("#planner");
+
+    //Print out the current date time
+    $("#currentDay").text(moment().format('dddd') + ", " + moment().format('MMMM Do YYYY, h:mm:ss a'));
+
     
     //Build the planner by iteraing through the array
     Times.forEach(function(time){
@@ -32,7 +36,7 @@ $(document).ready(function(){
         //Col for displaying time
         var timeCol = $("<div>");
         timeCol.addClass("col-md-1");
-        timeCol.text(time + "h00");
+        timeCol.text(time + "h");
         
         //Entry box
         var textEntry = $("<textarea>");
