@@ -3,10 +3,33 @@ $(document).ready(function(){
     var Times = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
     var container = $("#planner");
 
+    var currentDay = {
+        "9h" : "",
+        "10h" : "",
+        "11h" : "",
+        "12h" : "",
+        "13h" : "",
+        "14h" : "",
+        "15h" : "",
+        "16h" : "",
+        "17h" : "",
+    };
+
+    //Retrieve the planner from local storage and update accordingly
+    function bootUpPlanner(){
+        if (localStorage.getItem("currentDay"))
+        {
+            updatePlanner(currentDay);
+        }
+        else
+        {
+            updatePlanner(JSON.parse(localStorage.getItem("currentDay")));
+        }
+    }
+
     //Print out the current date time
     $("#currentDay").text(moment().format('dddd') + ", " + moment().format('MMMM Do YYYY, h:mm:ss a'));
 
-    
     //Build the planner by iteraing through the array
     Times.forEach(function(time){
         buildBlock(time);
@@ -31,7 +54,7 @@ $(document).ready(function(){
         //build the outer block
         var block = $("<div>");
         block.attr("id", time);
-        block.attr("class", "row border-top border-bottom");
+        block.attr("class", "row border-top border-bottom block");
 
         //Col for displaying time
         var timeCol = $("<div>");
@@ -56,5 +79,14 @@ $(document).ready(function(){
 
         //Append the time block to the planner
         container.append(block);
+    }
+
+    //Update the planner
+    function updatePlanner(dayObj)
+    {
+        $(".block").each(function(){
+            var time = $(this).children("div");
+            $(this).children("textarea").text(dayObj[time.text()]);
+        });
     }
 });
