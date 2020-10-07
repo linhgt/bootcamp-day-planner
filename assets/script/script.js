@@ -1,4 +1,13 @@
 $(document).ready(function(){
+    if (!localStorage.getItem("currentDay"))
+    {
+        updatePlanner(currentDay);
+    }
+    else
+    {
+        updatePlanner(JSON.parse(localStorage.getItem("currentDay")));
+    }
+    
     //array of times for reference
     var Times = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
     var container = $("#planner");
@@ -16,17 +25,6 @@ $(document).ready(function(){
         "17h" : "",
     };
 
-    //Retrieve the planner from local storage and update accordingly
-    function bootUpPlanner(){
-        if (localStorage.getItem("currentDay"))
-        {
-            updatePlanner(currentDay);
-        }
-        else
-        {
-            updatePlanner(JSON.parse(localStorage.getItem("currentDay")));
-        }
-    }
 
     //Print out the current date time
     $("#currentDay").text(moment().format('dddd') + ", " + moment().format('MMMM Do YYYY, h:mm:ss a'));
@@ -40,7 +38,6 @@ $(document).ready(function(){
     $(".btn").click(function(){
         entry = $(this).siblings("textarea").val();
         hour = $(this).siblings("div").text();
-
         //Save the hour and corresponding entry to local storage
         savePlan(hour, entry);
     });
@@ -57,12 +54,13 @@ $(document).ready(function(){
 
         //Retrieve the day object from the storage
         //Update the object and put it to the storage
-        else{
-            let theDay = localStorage.getItem("currentDay");
-            theDay[hour] = entry;
-    
-            localStorage.setItem("currentDay", JSON.stringify(theDay));
-        }
+        var theDay = JSON.parse(localStorage.getItem("currentDay"));
+
+        console.log(theDay);
+
+        theDay[hour] = entry;
+
+        localStorage.setItem("currentDay", JSON.stringify(theDay));
     }
 
     //Build a time block
