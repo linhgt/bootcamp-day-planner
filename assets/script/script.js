@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    //Retrieve the data from local storage and update it
     if (!localStorage.getItem("currentDay"))
     {
         updatePlanner(currentDay);
@@ -55,9 +56,6 @@ $(document).ready(function(){
         //Retrieve the day object from the storage
         //Update the object and put it to the storage
         var theDay = JSON.parse(localStorage.getItem("currentDay"));
-
-        console.log(theDay);
-
         theDay[hour] = entry;
 
         localStorage.setItem("currentDay", JSON.stringify(theDay));
@@ -98,7 +96,8 @@ $(document).ready(function(){
     //Update the planner
     function updatePlanner(dayObj)
     {
-        $(".block").each(function(){
+        $(".block").each(function(index){
+            console.log(this);
             var time = $(this).children("div");
             $(this).children("textarea").text(dayObj[time.text()]);
         });
