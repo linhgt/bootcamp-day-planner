@@ -3,6 +3,7 @@ $(document).ready(function(){
     var Times = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
     var container = $("#planner");
 
+    //Day object used to store the entry
     var currentDay = {
         "9h" : "",
         "10h" : "",
@@ -44,9 +45,24 @@ $(document).ready(function(){
         savePlan(hour, entry);
     });
 
+    //Save the entry to the localstorage
     function savePlan(hour, entry)
     {
-        localStorage.setItem(hour, entry);
+        //If no Day object presented in the storage
+        //Create one
+        if (!localStorage.getItem("currentDay"))
+        {
+            localStorage.setItem("currentDay", JSON.stringify(currentDay));
+        }
+
+        //Retrieve the day object from the storage
+        //Update the object and put it to the storage
+        else{
+            let theDay = localStorage.getItem("currentDay");
+            theDay[hour] = entry;
+    
+            localStorage.setItem("currentDay", JSON.stringify(theDay));
+        }
     }
 
     //Build a time block
