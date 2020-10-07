@@ -1,13 +1,4 @@
 $(document).ready(function(){
-    //Retrieve the data from local storage and update it
-    if (!localStorage.getItem("currentDay"))
-    {
-        updatePlanner(currentDay);
-    }
-    else
-    {
-        updatePlanner(JSON.parse(localStorage.getItem("currentDay")));
-    }
     
     //array of times for reference
     var Times = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
@@ -34,6 +25,16 @@ $(document).ready(function(){
     Times.forEach(function(time){
         buildBlock(time);
     })
+    
+    //Retrieve the data from local storage and update it
+    if (!localStorage.getItem("currentDay"))
+    {
+        updatePlanner(currentDay);
+    }
+    else
+    {
+        updatePlanner(JSON.parse(localStorage.getItem("currentDay")));
+    }
 
     //Bind eventlistener to each save button
     $(".btn").click(function(){
@@ -97,7 +98,7 @@ $(document).ready(function(){
     function updatePlanner(dayObj)
     {
         $(".block").each(function(index){
-            console.log(this);
+            console.log($(this).children());
             var time = $(this).children("div");
             $(this).children("textarea").text(dayObj[time.text()]);
         });
