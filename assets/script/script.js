@@ -61,7 +61,7 @@ $(document).ready(function(){
     });
 
     //Bind eventlistener to each save button
-    $(".btn").click(function(){
+    $("button").click(function(){
         entry = $(this).siblings("textarea").val();
         hour = $(this).siblings("div").text();
         //Save the hour and corresponding entry to local storage
