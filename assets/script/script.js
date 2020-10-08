@@ -36,6 +36,30 @@ $(document).ready(function(){
         updatePlanner(JSON.parse(localStorage.getItem("currentDay")));
     }
 
+    //Update the color of the entry based on current hour
+    $("textarea").each(function(){
+        //Get the current hour in number only
+        let hourEl = $(this).siblings("div");
+        let hourText = hourEl.text();
+        hourText = hourText.replace('h', '');
+        let hour = parseInt(hourText);
+
+        //Add the corresponding color to the current hour
+        let presentHour = moment().hour();
+        if(hour < presentHour)
+        {
+            $(this).addClass("past");
+        }
+        else if(hour == presentHour)
+        {
+            $(this).addClass("present");
+        }
+        else
+        {
+            $(this).addClass("future");
+        }
+    });
+
     //Bind eventlistener to each save button
     $(".btn").click(function(){
         entry = $(this).siblings("textarea").val();
@@ -67,7 +91,7 @@ $(document).ready(function(){
         //build the outer block
         var block = $("<div>");
         block.attr("id", time);
-        block.attr("class", "row border-top border-bottom block");
+        block.attr("class", "row border-top border-bottom block hour");
 
         //Col for displaying time
         var timeCol = $("<div>");
@@ -76,11 +100,11 @@ $(document).ready(function(){
         
         //Entry box
         var textEntry = $("<textarea>");
-        textEntry.addClass("col-md-10");
+        textEntry.addClass("col-md-10 description");
         
         //save buton
         var saveBtn = $("<button>");
-        saveBtn.addClass("col-md-1 btn btn-info");
+        saveBtn.addClass("col-md-1 saveBtn");
         var saveIcon = $("<i>");
         saveIcon.addClass("far fa-save");
         saveBtn.append(saveIcon);
@@ -98,7 +122,6 @@ $(document).ready(function(){
     function updatePlanner(dayObj)
     {
         $(".block").each(function(index){
-            console.log($(this).children());
             var time = $(this).children("div");
             $(this).children("textarea").text(dayObj[time.text()]);
         });
